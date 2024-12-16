@@ -1,0 +1,274 @@
+回文数
+#include<stdio.h>  // 包含标准输入输出库
+#include<math.h>   // 包含数学函数库，虽然在此代码中未使用
+
+int main() {
+    int i, n;   // 定义两个整型变量i和n，用于循环计数
+    char a[100]; // 定义一个字符数组a，用于存储输入的字符
+
+    while(1) { // 无限循环，用于连续读取输入直到遇到文件结束符EOF
+        for(i=0; 1; i++) { // 内层循环，用于读取字符直到换行符'\n'或空格' '
+            a[i] = getchar(); // 从标准输入读取一个字符并存储在数组a中
+            if(a[i] == EOF) break; // 如果读取到文件结束符EOF，则跳出循环
+            if(a[i] == '\n' || a[i] == ' ') break; // 如果读取到换行符或空格，也跳出循环
+        }
+        if(i > 0) { // 如果数组a中至少有一个字符
+            for(n = 0; 1; n++, i--) { // 再次使用i和n进行循环，这次用于比较字符
+                if(n > i) { // 如果n大于i，说明已经比较了所有字符
+                    printf("YES\n"); // 输出"YES"，表示所有字符都匹配
+                    break; // 跳出循环
+                }
+                if(a[n] != a[i - 1]) { // 如果当前字符a[n]与对应的字符a[i-1]不匹配
+                    printf("NO\n"); // 输出"NO"，表示有不匹配的字符
+                    break; // 跳出循环
+                }
+            }
+        }
+        if(a[i] == EOF) break; // 如果读取到文件结束符EOF，则跳出外层循环
+    }
+    return 0; // 程序结束返回0
+}
+素数之和
+#include <stdio.h>  // 包含标准输入输出库
+#include <math.h>   // 包含数学函数库，用于计算平方根
+
+int main() {
+    int sum = 0, n = 0, j, yes, high;  // 定义变量sum用于累加，n用于计数，j用于循环，yes用于标记是否为素数，high用于存储输入的数值
+
+    //--------------错误区域开始------------------    
+    scanf("%d", &high);  // 读取用户输入的一个整数，并存储在变量high中
+    while ((high >= 2) && (n <= 10)) {  // 循环条件：high大于等于2且n小于等于10
+        yes = 1;  // 初始化yes为1，假设high是素数
+        for (j = 2; j <= (int)sqrt((double)high); j++) {  // 循环检查high是否为素数
+            if (high % j == 0) {  // 如果high能被j整除，则不是素数
+                yes = 0;  // 标记yes为0
+                break;  // 跳出循环
+            }
+        }
+        if (yes) {  // 如果high是素数
+            sum += high;  // 将high加到sum中
+            n++;  // 计数器n加1
+        }
+        if (n < 10) high--;  // 如果n小于10，减少high的值以检查下一个数
+        else break;  // 如果n等于10，跳出循环
+    }
+    printf("sum=%d\n", sum);  // 输出累加的和
+    //-----------错误区域结束---------------------
+    return 0;  // 程序结束返回0
+}
+字符图形
+#include<stdio.h>  // 包含标准输入输出库
+
+int main() {
+   int i, n, m;  // 定义整数变量i, n, m
+   char c, d;    // 定义字符变量c和d
+
+   while(1) {  // 无限循环，直到遇到输入错误或文件结束
+       if(scanf("%d", &i) != 1) break;  // 读取一个整数i，如果输入不是整数则跳出循环
+       scanf("%c%c", &d, &c);  // 读取两个字符，d被忽略，c用于后续打印
+
+       for(n = 1; n <= i; n++) {  // 外层循环，控制行数，从1到i
+           for(m = 1; m <= 2 * n - 1; m++) {  // 内层循环，控制每行打印的字符数，从1到2n-1
+               printf("%c", c);  // 打印字符c
+           }  // 每行结束后换行
+           printf("\n");
+       }  // 完成上半部分的打印
+
+       n = n - 2;  // 调整n的值，准备打印下半部分
+       while(n > 0) {  // 打印下半部分，直到n小于等于0
+           for(m = 1; m <= 2 * n - 1; m++) {  // 内层循环，控制每行打印的字符数，从1到2n-1
+               printf("%c", c);  // 打印字符c
+           }  // 每行结束后换行
+           printf("\n");
+           n--;  // 减少n的值
+       }  // 完成下半部分的打印
+       printf("\n");  // 最后打印一个空行
+   }  // 循环结束
+   return 0;  // 程序结束返回0
+}
+扑克牌
+#include<stdio.h>  // 包含标准输入输出库
+
+int main() {
+    int i, n;  // 定义循环变量i和测试用例的数量n
+    scanf("%d", &n);  // 读取测试用例的数量
+
+    for (i = 0; i < n; i++) {  // 对于每个测试用例
+        int s1, s2, s3;  // 定义三个整数变量，用于存储牌的数值
+        char a, b, c;    // 定义三个字符变量，用于存储牌的花色
+        scanf("%d%c%d%c%d%c", &s1, &a, &s2, &b, &s3, &c);  // 读取三张牌的数值和花色
+
+        int max;  // 定义一个变量，用于存储三张牌中的最大值
+        if (s1 <= s2) max = s2;  // 比较s1和s2，取较大值
+        else max = s1;
+        if (max < s3) max = s3;  // 比较max和s3，取较大值
+
+        if (max <= 10) {  // 如果最大值是10或更小（表示牌的数值）
+            if (s1 == s2 && s2 == s3)  // 如果三张牌数值相同
+                printf("Leopard %d\n", max);  // 输出"Leopard"和最大值
+            else if (s1 != s2 && s2 != s3 && s1 != s3) {  // 如果三张牌数值都不同
+                if (a == b && a == c && max - (s1 + s2 + s3) / 3 == 1)  // 如果花色相同且数值连续
+                    printf("Flush straight %d\n", max);  // 输出"Flush straight"和最大值
+                else if (max - (s1 + s2 + s3) / 3 == 1)  // 如果数值连续
+                    printf("Straight %d\n", max);  // 输出"Straight"和最大值
+                else if (a == b && a == c)  // 如果花色相同
+                    printf("Same kind %d\n", max);  // 输出"Same kind"和最大值
+                else
+                    printf("General %d\n", max);  // 输出"General"和最大值
+            } else {  // 如果有一对
+                if (a == b && a == c)  // 如果花色相同
+                    printf("Same kind %d\n", max);  // 输出"Same kind"和最大值
+                else {
+                    if (s1 == s2) max = s1;  // 确定对子的数值
+                    if (s1 == s3) max = s1;
+                    if (s2 == s3) max = s2;
+                    printf("Pair %d\n", max);  // 输出"Pair"和对子的数值
+                }
+            }
+        } else {  // 如果最大值是J、Q、K或A（表示牌的数值）
+            char f;  // 定义一个字符变量，用于存储牌的等级字符
+            if (max == 11) f = 'J';  // 将数值转换为对应的等级字符
+            if (max == 12) f = 'Q';
+            if (max == 13) f = 'K';
+            if (max == 14) f = 'A';
+
+            if (s1 == s2 && s2 == s3)  // 如果三张牌数值相同
+                printf("Leopard %c\n", f);  // 输出"Leopard"和等级字符
+            else if (s1 != s2 && s2 != s3 && s1 != s3) {  // 如果三张牌数值都不同
+                if (a == b && a == c && max - (s1 + s2 + s3) / 3 == 1)  // 如果花色相同且数值连续
+                    printf("Flush straight %c\n", f);  // 输出"Flush straight"和等级字符
+                else if (max - (s1 + s2 + s3) / 3 == 1)  // 如果数值连续
+                    printf("Straight %c\n", f);  // 输出"Straight"和等级字符
+                else if (a == b && a == c)  // 如果花色相同
+                    printf("Same kind %c\n", f);  // 输出"Same kind"和等级字符
+                else
+                    printf("General %c\n", f);  // 输出"General"和等级字符
+            } else {  // 如果有一对
+                if (a == b && a == c)  // 如果花色相同
+                    printf("Same kind %c\n", f);  // 输出"Same kind"和等级字符
+                else {
+                    if (s1 == s2) max = s1;  // 确定对子的数值
+                    if (s1 == s3) max = s1;
+                    if (s2 == s3) max = s2;
+                    if (max <= 10)  // 如果对子的数值是10或更小
+                        printf("Pair %d\n", max);  // 输出"Pair"和对子的数值
+                    else {  // 如果对子的数值是J、Q、K或A
+                        if (max == 11) f = 'J';  // 将数值转换为对应的等级字符
+                        if (max == 12) f = 'Q';
+                        if (max == 13) f = 'K';
+                        if (max == 14) f = 'A';
+                        printf("Pair %c\n", f);  // 输出"Pair"和等级字符
+                    }
+                }
+            }
+        }
+    }
+    return 0;  // 程序结束返回0
+}
+分数加减
+#include<stdio.h>  // 包含标准输入输出库
+
+int main() {
+    int a, b, c, d;  // 定义四个整数变量a, b, c, d
+    char x, y, z;    // 定义三个字符变量x, y, z
+
+    while(1) {  // 无限循环，直到遇到输入错误或文件结束
+        if(scanf("%d%c%d%c%d%c%d", &a, &x, &b, &y, &c, &z, &d) != 7) break;  // 读取输入，如果读取的项不足7个，则跳出循环
+        int i, j;  // 定义两个整数变量i, j
+        i = b; j = d;  // 将b和d的值分别赋给i和j
+
+        // 计算最大公约数（GCD）
+        while (j != 0) {
+            int temp = j;
+            j = i % j;
+            i = temp;
+        }
+
+        // 计算最小公倍数（LCM）
+        j = b * d / i;
+
+        // 根据运算符y进行加法或减法运算
+        if(y == '+') {
+            i = (a * j / b + c * j / d);  // 加法
+        }
+        if(y == '-') {
+            i = (a * j / b - c * j / d);  // 减法
+        }
+
+        // 简化结果
+        int m, n;
+        m = i; n = j;
+        while (n != 0) {
+            int temp = n;
+            n = m % n;
+            m = temp;
+        }
+        i = i / m; j = j / m;
+
+        // 输出结果
+        if(i == 0) printf("0\n");  // 如果结果为0，直接输出0
+        else if(j == 1) printf("%d\n", i);  // 如果分母为1，输出整数结果
+        else {
+            if(j < 0) {i = i - 2 * i; j = j - 2 * j;}  // 如果分母为负数，转换为正数
+            printf("%d/%d\n", i, j);  // 输出分数结果
+        }
+    }
+    return 0;  // 程序结束返回0
+}
+星期几
+#include <stdio.h> 
+
+// 函数getWeek用于计算给定日期是星期几
+int getWeek(int day) {
+    /**********Begin**********/
+    int week, y, m, d;
+    d = day % 100; // 计算日
+    day /= 100;
+    m = day % 100; // 计算月
+    day /= 100;
+    y = day;      // 计算年
+
+    int run; // 用于标记是否为闰年
+    if (y % 4 == 0 && y % 100 != 0 || y % 400 == 0)
+        run = 1;
+    else
+        run = 0;
+
+    int n, z = 0; // z用于计算给定日期之前的总天数
+    for (n = 1900; n < y; n++) { // 计算从1900年到给定年份之前的总天数
+        z += 365;
+        if (n % 4 == 0 && n % 100 != 0 || n % 400 == 0) // 如果是闰年，则加一天
+            z++;
+    }
+
+    int a[12] = {0, 31, 28 + run, 31, 30, 31, 30, 31, 31, 30, 31, 30}; // 每个月的天数，闰年2月为29天
+    for (n = 1; n < m; n++) { // 计算给定日期之前的所有月份的总天数
+        z += a[n];
+    }
+    for (n = 1; n < d; n++) { // 计算给定日期之前的所有天数
+        z++;
+    }
+    week = z % 7; // 计算星期几，0为星期日，1为星期一，以此类推
+    return week;
+    /**********End**********/
+}
+
+// 函数printWeek用于打印星期几
+void printWeek(int w) {
+    /**********Begin**********/
+    if (w == 1) printf("Mon");
+    if (w == 2) printf("Tue");
+    if (w == 3) printf("Wed");
+    if (w == 4) printf("Thu");
+    if (w == 5) printf("Fri");
+    if (w == 6) printf("Sat");
+    if (w == 0) printf("Sun"); // 打印星期几的英文缩写
+    /**********End**********/
+}
+
+int main() {
+    int date;
+    scanf("%d", &date); // 读取输入的日期，格式为年年年年月月日日
+    int week = getWeek(date); // 调用getWeek函数计算星期几
+    printWeek(week); // 调用printWeek函数打印星期几
+    return 0;
